@@ -4,8 +4,21 @@ import LogoWc from '../components/LogoWc'
 import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
 import { Link } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 
 const Register = () => {
+   const {
+      register,
+      handleSubmit,
+      formState: { errors }
+   } = useForm()
+
+   const handleRegister = (data) => {
+      console.log(`username: ${data.username}`)
+      console.log(`email: ${data.email}`)
+      console.log(`password: ${data.password}`)
+   }
+
    return (
       <div className='min-h-screen px-6 pb-5 font-poppins bg-gradient-to-br from-[#f0f4f8] via-[#e5eaf1] to-[#f7f9fc]'>
          <div className="pt-5">
@@ -16,19 +29,31 @@ const Register = () => {
             <LogoWc className="text-2xl" />
          </div>
 
-         <form className='mt-20'>
+         <form
+            className='mt-20'
+            onSubmit={handleSubmit(handleRegister)}
+         >
             <Input
+               className="mb-7"
                type="text"
                name="username"
-               id="text"
+               id="username"
                label="User Name"
                placeholder="Masukan User Name"
                // value={formData.email}
                // onChange={handleChange}
-               // error={errors.email}
-               className="mb-7"
+               register={register}
+               error={errors.username}
+               {...register('username', {
+                  required: 'username is required',
+                  minLength: {
+                     value: 3,
+                     message: "User Name must be at 3 characters"
+                  }
+               })}
             />
             <Input
+               className="mb-7"
                type="email"
                name="email"
                id="email"
@@ -37,9 +62,18 @@ const Register = () => {
                // value={formData.email}
                // onChange={handleChange}
                // error={errors.email}
-               className="mb-7"
+               register={register}
+               error={errors.email}
+               {...register('email', {
+                  required: 'Email is required',
+                  pattern: {
+                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                     message: 'Invalid email address',
+                  },
+               })}
             />
             <Input
+               className="mb-7"
                type="password"
                name="email"
                id="email"
@@ -48,7 +82,15 @@ const Register = () => {
                // value={formData.email}
                // onChange={handleChange}
                // error={errors.email}
-               className="mb-7"
+               error={errors.password}
+               register={register}
+               {...register('password', {
+                  required: 'Password is required',
+                  minLength: {
+                     value: 6,
+                     message: 'Password must be at least 6 characters',
+                  },
+               })}
             />
             <Button
                type="submit"

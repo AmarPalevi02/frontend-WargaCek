@@ -1,20 +1,19 @@
-import React from 'react'
+import React from 'react';
 
 const Input = ({
    type,
    placeholder = '',
-   value,
-   onChange,
    name,
    id,
    className = '',
    label,
    error,
    disabled = false,
+   register,
    ...rest
 }) => {
    return (
-      <div className="flex flex-col w-full">
+      <div className={`flex flex-col w-full ${className}`}>
          {label && (
             <label
                htmlFor={id}
@@ -26,20 +25,21 @@ const Input = ({
          <input
             type={type}
             placeholder={placeholder}
-            value={value}
-            onChange={onChange}
             name={name}
             id={id}
             disabled={disabled}
-            className={`px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-poppins text-gray-900 placeholder-gray-400 border-gray-300 ${className} ${error ? 'border-red-500' : ''
+            className={`px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-poppins text-gray-900 placeholder-gray-400 border-gray-300 ${error ? 'border-red-500' : ''
                } ${disabled ? 'bg-gray-100 cursor-not-allowed' : ''}`}
+            {...(register && register(name))}
             {...rest}
          />
          {error && (
-            <span className="mt-1 text-sm text-red-500 font-poppins">{error}</span>
+            <span className="mt-2 text-sm text-red-500 font-poppins">
+               {error.message || error}
+            </span>
          )}
       </div>
-   )
-}
+   );
+};
 
-export default Input
+export default Input;
