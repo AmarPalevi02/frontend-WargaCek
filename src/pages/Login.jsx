@@ -29,7 +29,7 @@ const Login = () => {
             <LogoWc className="text-2xl" />
          </div>
 
-         <form
+         <form 
             className='mt-20'
             onSubmit={handleSubmit(handleLogin)}
          >

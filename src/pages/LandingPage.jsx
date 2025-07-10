@@ -5,10 +5,12 @@ import { FaPlusCircle } from "react-icons/fa";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { BiSolidBarChartSquare } from "react-icons/bi";
 import { FaRoute } from "react-icons/fa";
+import Navbar from '../components/Navbar';
 
 const LandingPage = () => {
    return (
       <div className='min-h-screen px-6 pb-5 font-poppins bg-gradient-to-br from-[#f0f4f8] via-[#e5eaf1] to-[#f7f9fc]'>
+         <Navbar />
          <div className="flex justify-end pt-6 gap-3">
             <Button variant="primary" size="md" to="/login">Login</Button>
             <Button variant="secondary" size="md" to="/register">Register</Button>
