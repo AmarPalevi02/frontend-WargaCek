@@ -3,12 +3,15 @@ import LogoMaps from '../components/LogoMaps'
 import LogoWc from '../components/LogoWc'
 import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
+import Cookies from 'js-cookie'
+import Alert from '../components/ui/Alert'
+
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { postData } from '../utils/fetchDatas'
-import Cookies from 'js-cookie'
 import { useDispatch } from 'react-redux'
 import { userLogin } from '../redux/auth/action'
+import { showAlert } from '../redux/alert/action'
 
 
 const Login = () => {
@@ -41,13 +44,13 @@ const Login = () => {
          navigate('/');
 
       } catch (error) {
-         alert("Login gagal. Periksa kembali email dan password Anda.");
-         console.error(error);
+         dispatch(showAlert('Login gagal. Prikasa kemabali email dan password', 'error'))
       }
    }
 
    return (
       <div className='min-h-screen px-6 pb-5 font-poppins bg-gradient-to-br from-[#f0f4f8] via-[#e5eaf1] to-[#f7f9fc]'>
+         <Alert />
          <div className="pt-5">
             <LogoMaps />
          </div>

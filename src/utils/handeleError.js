@@ -12,7 +12,6 @@ const handleError = (error) => {
       Cookies.remove('email');
       Cookies.remove('role');
 
-
       window.location.href = '/';
       return Promise.reject(error);
    }
