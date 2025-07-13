@@ -6,17 +6,24 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { BiSolidBarChartSquare } from "react-icons/bi";
 import { FaRoute } from "react-icons/fa";
 import Navbar from '../components/Navbar';
+import Cookies from 'js-cookie';
 
 const LandingPage = () => {
+   const { token, username, email, role } = Cookies.get('auth')
+      ? JSON.parse(Cookies.get('auth'))
+      : {};
+
    return (
       <div className='min-h-screen px-6 pb-5 font-poppins bg-gradient-to-br from-[#f0f4f8] via-[#e5eaf1] to-[#f7f9fc]'>
          <Navbar />
-         <div className="flex justify-end pt-6 gap-3">
-            <Button variant="primary" size="md" to="/login">Login</Button>
-            <Button variant="secondary" size="md" to="/register">Register</Button>
-         </div>
+         {!token || !username || !email || !role ? (
+            <div className="flex justify-end pt-6 gap-3">
+               <Button variant="primary" size="md" to="/login">Login</Button>
+               <Button variant="secondary" size="md" to="/register">Register</Button>
+            </div>
+         ) : ("")}
 
-         <div className="text-center mt-14">
+         <div className="text-center pt-14">
             <LogoWc className="text-2xl" />
             <h1 className='text-lg font-medium mt-1'>Info Jalan dari Warga, untuk Warga.</h1>
          </div>

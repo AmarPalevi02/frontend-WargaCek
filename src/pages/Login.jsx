@@ -3,8 +3,12 @@ import LogoMaps from '../components/LogoMaps'
 import LogoWc from '../components/LogoWc'
 import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { postData } from '../utils/fetchDatas'
+import Cookies from 'js-cookie'
+import { useDispatch } from 'react-redux'
+import { userLogin } from '../redux/auth/action'
 
 
 const Login = () => {
@@ -14,9 +18,32 @@ const Login = () => {
       formState: { errors }
    } = useForm()
 
-   const handleLogin = (data) => {
-      console.log("email" + data.email)
-      console.log("password" + data.password)
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+
+   const handleLogin = async (data) => {
+      try {
+         const response = await postData(data, false, 'login')
+         const { token, user } = response.data;
+         console.log(user)
+
+         const authPayload = {
+            token,
+            username: user.username,
+            email: user.email,
+            role: user.role
+         };
+
+         Cookies.set('auth', JSON.stringify(authPayload));
+
+         dispatch(userLogin(token, user.username, user.email, user.role));
+
+         navigate('/');
+
+      } catch (error) {
+         alert("Login gagal. Periksa kembali email dan password Anda.");
+         console.error(error);
+      }
    }
 
    return (
@@ -29,7 +56,7 @@ const Login = () => {
             <LogoWc className="text-2xl" />
          </div>
 
-         <form 
+         <form
             className='mt-20'
             onSubmit={handleSubmit(handleLogin)}
          >
@@ -40,8 +67,6 @@ const Login = () => {
                id="email"
                label="Email"
                placeholder="Masukan email"
-               // value={formData.email}
-               // onChange={handleChange}
                register={register}
                error={errors.email}
                {...register('email', {
@@ -59,8 +84,6 @@ const Login = () => {
                id="password"
                label="Password"
                placeholder="Masukan Password"
-               // value={formData.email}
-               // onChange={handleChange}
                error={errors.password}
                register={register}
                {...register('password', {

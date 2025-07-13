@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import AppRoute from './routes'
+import { listen } from './redux/listener'
 
 const App = () => {
+  useEffect(() => {
+    listen()
+  }, [])
+  
   return (
     <BrowserRouter>
       <AppRoute />

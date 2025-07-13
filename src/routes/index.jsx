@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import LandingPage from '../pages/LandingPage'
 import Register from '../pages/Register'
 import Login from '../pages/Login'
+import Maps from '../pages/maps'
 
 const AppRoute = () => {
    return (
@@ -10,6 +11,7 @@ const AppRoute = () => {
          <Route path='/' element={<LandingPage />} />
          <Route path='/register' element={<Register />} />
          <Route path='/login' element={<Login />} />
+         <Route path='/maps' element={<Maps />} />
       </Routes>
    )
 }
