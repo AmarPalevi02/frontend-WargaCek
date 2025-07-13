@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import LogoMaps from '../components/LogoMaps'
 import LogoWc from '../components/LogoWc'
 import Input from '../components/ui/Input'
@@ -12,6 +12,7 @@ import { postData } from '../utils/fetchDatas'
 import { useDispatch } from 'react-redux'
 import { userLogin } from '../redux/auth/action'
 import { showAlert } from '../redux/alert/action'
+import Spinner from '../components/ui/Spinner'
 
 
 const Login = () => {
@@ -23,12 +24,13 @@ const Login = () => {
 
    const dispatch = useDispatch()
    const navigate = useNavigate()
+   const [isLoading, setIsloading] = useState(false)
 
    const handleLogin = async (data) => {
+      setIsloading(true)
       try {
          const response = await postData(data, false, 'login')
          const { token, user } = response.data;
-         console.log(user)
 
          const authPayload = {
             token,
@@ -36,15 +38,16 @@ const Login = () => {
             email: user.email,
             role: user.role
          };
-
          Cookies.set('auth', JSON.stringify(authPayload));
 
          dispatch(userLogin(token, user.username, user.email, user.role));
 
          navigate('/');
 
+         setIsloading(false)
       } catch (error) {
          dispatch(showAlert('Login gagal. Prikasa kemabali email dan password', 'error'))
+         setIsloading(false)
       }
    }
 
@@ -97,10 +100,20 @@ const Login = () => {
                   },
                })}
             />
+
             <Button
                type="submit"
-               className='w-full'>
-               Login
+               className='w-full'
+               disabled={isLoading}
+            >
+               {isLoading ? (
+                  <div className="flex justify-center items-center gap-2">
+                     <Spinner />
+                     Loading...
+                  </div>
+               ) : (
+                  "Login"
+               )}
             </Button>
          </form>
 

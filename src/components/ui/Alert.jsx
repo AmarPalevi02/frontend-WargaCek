@@ -58,7 +58,7 @@ const Alert = () => {
             <p className="mb-5 text-sm">{message}</p>
             <button
                onClick={() => dispatch(hideAlert())}
-               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full"
+               className="bg-[#3b82f6] text-white px-4 py-2 rounded hover:bg-blue-700 w-full"
             >
                OK
             </button>

@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import LogoMaps from '../components/LogoMaps'
 import LogoWc from '../components/LogoWc'
 import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { postData } from '../utils/fetchDatas'
+import { useDispatch } from 'react-redux'
+import { showAlert } from '../redux/alert/action'
+import Alert from '../components/ui/Alert'
+import Spinner from '../components/ui/Spinner'
 
 const Register = () => {
    const {
@@ -13,14 +18,28 @@ const Register = () => {
       formState: { errors }
    } = useForm()
 
-   const handleRegister = (data) => {
-      console.log(`username: ${data.username}`)
-      console.log(`email: ${data.email}`)
-      console.log(`password: ${data.password}`)
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+   const [isLoading, setIsloading] = useState(false)
+
+   const handleRegister = async (data) => {
+      setIsloading(true)
+      try {
+         const response = await postData(data, false, 'register')
+         if (response.data.status === '201') {
+            navigate('/login')
+         }
+         setIsloading(false)
+      } catch (error) {
+         const message = error.response?.data?.message || "Gagal registrasi";
+         dispatch(showAlert(`${message}`, 'error'))
+         setIsloading(false)
+      }
    }
 
    return (
       <div className='min-h-screen px-6 pb-5 font-poppins bg-gradient-to-br from-[#f0f4f8] via-[#e5eaf1] to-[#f7f9fc]'>
+         <Alert />
          <div className="pt-5">
             <LogoMaps />
          </div>
@@ -40,8 +59,6 @@ const Register = () => {
                id="username"
                label="User Name"
                placeholder="Masukan User Name"
-               // value={formData.email}
-               // onChange={handleChange}
                register={register}
                error={errors.username}
                {...register('username', {
@@ -59,9 +76,6 @@ const Register = () => {
                id="email"
                label="Email"
                placeholder="Masukan email"
-               // value={formData.email}
-               // onChange={handleChange}
-               // error={errors.email}
                register={register}
                error={errors.email}
                {...register('email', {
@@ -75,13 +89,10 @@ const Register = () => {
             <Input
                className="mb-7"
                type="password"
-               name="email"
-               id="email"
+               name="password"
+               id="password"
                label="Password"
                placeholder="Masukan Password"
-               // value={formData.email}
-               // onChange={handleChange}
-               // error={errors.email}
                error={errors.password}
                register={register}
                {...register('password', {
@@ -95,7 +106,14 @@ const Register = () => {
             <Button
                type="submit"
                className='w-full'>
-               Register
+               {isLoading ? (
+                  <div className="flex justify-center items-center gap-2">
+                     <Spinner />
+                     Loading...
+                  </div>
+               ) : (
+                  "Register"
+               )}
             </Button>
          </form>
 
