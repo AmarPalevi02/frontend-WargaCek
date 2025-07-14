@@ -5,6 +5,7 @@ import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
 import Cookies from 'js-cookie'
 import Alert from '../components/ui/Alert'
+import Spinner from '../components/ui/Spinner'
 
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
@@ -12,7 +13,7 @@ import { postData } from '../utils/fetchDatas'
 import { useDispatch } from 'react-redux'
 import { userLogin } from '../redux/auth/action'
 import { showAlert } from '../redux/alert/action'
-import Spinner from '../components/ui/Spinner'
+import PageLayout from '../components/layout/PageLayout'
 
 
 const Login = () => {
@@ -52,7 +53,7 @@ const Login = () => {
    }
 
    return (
-      <div className='min-h-screen px-6 pb-5 font-poppins bg-gradient-to-br from-[#f0f4f8] via-[#e5eaf1] to-[#f7f9fc]'>
+      <PageLayout>
          <Alert />
          <div className="pt-5">
             <LogoMaps />
@@ -76,7 +77,7 @@ const Login = () => {
                register={register}
                error={errors.email}
                {...register('email', {
-                  required: 'Email is required',
+                  required: 'Email wajib di isi',
                   pattern: {
                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                      message: 'Invalid email address',
@@ -93,7 +94,7 @@ const Login = () => {
                error={errors.password}
                register={register}
                {...register('password', {
-                  required: 'Password is required',
+                  required: 'Password wajib di isi',
                   minLength: {
                      value: 6,
                      message: 'Password must be at least 6 characters',
@@ -126,7 +127,7 @@ const Login = () => {
                Daftar
             </Link>
          </div>
-      </div>
+      </PageLayout >
    )
 }
 

@@ -1,12 +1,16 @@
 import React from 'react'
 import Button from '../components/ui/Button'
 import LogoWc from '../components/LogoWc'
+import Navbar from '../components/Navbar';
+import Cookies from 'js-cookie';
+import PageLayout from '../components/layout/PageLayout';
+
 import { FaPlusCircle } from "react-icons/fa";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { BiSolidBarChartSquare } from "react-icons/bi";
 import { FaRoute } from "react-icons/fa";
-import Navbar from '../components/Navbar';
-import Cookies from 'js-cookie';
+import { useSelector } from 'react-redux';
+
 
 const LandingPage = () => {
    const { token, username, email, role } = Cookies.get('auth')
@@ -14,7 +18,7 @@ const LandingPage = () => {
       : {};
 
    return (
-      <div className='min-h-screen px-6 pb-5 font-poppins bg-gradient-to-br from-[#f0f4f8] via-[#e5eaf1] to-[#f7f9fc]'>
+      <PageLayout>
          <Navbar />
          {!token || !username || !email || !role ? (
             <div className="flex justify-end pt-6 gap-3">
@@ -60,7 +64,7 @@ const LandingPage = () => {
                Menyediakan platform digital berbasis crowdsourcing yang memungkinkan warga untuk saling berbagi dan memverifikasi informasi lapangan secara cepat dan akurat.
             </p>
          </div>
-      </div>
+      </PageLayout>
    )
 }
 

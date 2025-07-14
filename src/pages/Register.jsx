@@ -3,13 +3,16 @@ import LogoMaps from '../components/LogoMaps'
 import LogoWc from '../components/LogoWc'
 import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
+import Alert from '../components/ui/Alert'
+import Spinner from '../components/ui/Spinner'
+
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { postData } from '../utils/fetchDatas'
 import { useDispatch } from 'react-redux'
 import { showAlert } from '../redux/alert/action'
-import Alert from '../components/ui/Alert'
-import Spinner from '../components/ui/Spinner'
+import PageLayout from '../components/layout/PageLayout'
+
 
 const Register = () => {
    const {
@@ -38,7 +41,7 @@ const Register = () => {
    }
 
    return (
-      <div className='min-h-screen px-6 pb-5 font-poppins bg-gradient-to-br from-[#f0f4f8] via-[#e5eaf1] to-[#f7f9fc]'>
+      <PageLayout>
          <Alert />
          <div className="pt-5">
             <LogoMaps />
@@ -126,7 +129,7 @@ const Register = () => {
                Login
             </Link>
          </div>
-      </div>
+      </PageLayout>
    )
 }
 

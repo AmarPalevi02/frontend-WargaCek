@@ -8,12 +8,13 @@ const Navbar = () => {
       ? JSON.parse(Cookies.get('auth'))
       : {};
 
+
    return (
       <>
          {!token || !username || !email || !role ? (
             ''
          ) : (
-            <nav className="w-full fixed bottom-10 px-6 left-0">
+            <nav className="w-full fixed bottom-10 px-6 left-0 z-10">
                <ul className="flex justify-between rounded-[30px] py-3 px-3 shadow-2xl bg-gradient-to-br from-[#f0f4f8] via-[#e5eaf1] to-[#f7f9fc]">
                   <NavLink
                      to="/"
