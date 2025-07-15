@@ -6,6 +6,7 @@ import Button from '../components/ui/Button'
 import Cookies from 'js-cookie'
 import Alert from '../components/ui/Alert'
 import Spinner from '../components/ui/Spinner'
+import PageLayout from '../components/layout/PageLayout'
 
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
@@ -13,7 +14,6 @@ import { postData } from '../utils/fetchDatas'
 import { useDispatch } from 'react-redux'
 import { userLogin } from '../redux/auth/action'
 import { showAlert } from '../redux/alert/action'
-import PageLayout from '../components/layout/PageLayout'
 
 
 const Login = () => {
@@ -47,7 +47,8 @@ const Login = () => {
 
          setIsloading(false)
       } catch (error) {
-         dispatch(showAlert('Login gagal. Prikasa kemabali email dan password', 'error'))
+         const message = error.response?.data?.message || 'Login gagal. Prikasa kemabali email dan password'
+         dispatch(showAlert(`${message}`, 'error'))
          setIsloading(false)
       }
    }

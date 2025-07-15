@@ -1,14 +1,13 @@
 import React from 'react'
 import Navbar from '../../components/Navbar'
-import PageLayout from '../../components/layout/PageLayout'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 
 const Maps = () => {
    return (
-      <>
+      <div className='w-full  h-screen flex justify-center '>
          <Navbar />
          <MapContainer
-            className="w-full h-screen z-0"
+            className="max-w-lg w-full z-0"
             center={[51.505, -0.09]}
             zoom={13}
             scrollWheelZoom={false}
@@ -23,7 +22,7 @@ const Maps = () => {
                </Popup>
             </Marker>
          </MapContainer>
-      </>
+      </div>
    )
 }
 

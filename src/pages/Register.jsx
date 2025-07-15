@@ -5,13 +5,13 @@ import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
 import Alert from '../components/ui/Alert'
 import Spinner from '../components/ui/Spinner'
+import PageLayout from '../components/layout/PageLayout'
 
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { postData } from '../utils/fetchDatas'
 import { useDispatch } from 'react-redux'
 import { showAlert } from '../redux/alert/action'
-import PageLayout from '../components/layout/PageLayout'
 
 
 const Register = () => {
@@ -72,6 +72,7 @@ const Register = () => {
                   }
                })}
             />
+            
             <Input
                className="mb-7"
                type="email"
@@ -89,6 +90,7 @@ const Register = () => {
                   },
                })}
             />
+
             <Input
                className="mb-7"
                type="password"
@@ -106,6 +108,7 @@ const Register = () => {
                   },
                })}
             />
+
             <Button
                type="submit"
                className='w-full'>
