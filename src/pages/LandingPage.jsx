@@ -2,20 +2,17 @@ import React from 'react'
 import Button from '../components/ui/Button'
 import LogoWc from '../components/LogoWc'
 import Navbar from '../components/Navbar';
-import Cookies from 'js-cookie';
 import PageLayout from '../components/layout/PageLayout';
+import useAuthToken from '../hooks/useAuthToken';
 
 import { FaPlusCircle } from "react-icons/fa";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { BiSolidBarChartSquare } from "react-icons/bi";
 import { FaRoute } from "react-icons/fa";
-import { useSelector } from 'react-redux';
 
 
 const LandingPage = () => {
-   const { token, username, email, role } = Cookies.get('auth')
-      ? JSON.parse(Cookies.get('auth'))
-      : {};
+   const { token, username, email, role } = useAuthToken()
 
    return (
       <PageLayout>
@@ -36,7 +33,7 @@ const LandingPage = () => {
             Meningkatkan partisipasi aktif masyarakat dalam melaporkan kondisi infrastruktur seperti kerusakan jalan, banjir, dan penutupan jalan secara real-time.
          </p>
 
-         <div className="w-full bg-[#dadadb] rounded-md px-3 py-5 mt-6">
+         <div className="w-full bg-[#9BDCC5] rounded-md px-3 py-5 mt-6">
             <div className="flex items-center gap-2 mb-3.5">
                <FaPlusCircle className='text-3xl text-[#6b5778]' />
                <p className='text-base'>Melaporkan kerusakan (lokasi, foto, deskripsi)</p>
@@ -58,7 +55,7 @@ const LandingPage = () => {
             </div>
          </div>
 
-         <div className="w-full bg-[#dadadb] rounded-md px-3 py-5 mt-5">
+         <div className="w-full bg-[#9BDCC5] rounded-md px-3 py-5 mt-5">
             <h2 className='text-2xl font-semibold'>Tujuan</h2>
             <p className='text-justify leading-7 mt-2'>
                Menyediakan platform digital berbasis crowdsourcing yang memungkinkan warga untuk saling berbagi dan memverifikasi informasi lapangan secara cepat dan akurat.
