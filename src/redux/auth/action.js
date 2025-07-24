@@ -15,10 +15,7 @@ export const userLogin = (token, username, email, role) => {
 }
 
 export const userLogout = () => {
-   Cookies.remove("token")
-   Cookies.remove("username")
-   Cookies.remove("email")
-   Cookies.remove("role")
+   Cookies.remove("auth")
 
    return {
       type: USER_LOGOUT

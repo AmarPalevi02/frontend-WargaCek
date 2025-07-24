@@ -20,7 +20,7 @@ export default function reducer(state = initialState, action) {
             role: action.role
          }
       case USER_LOGOUT:
-         return { token: null, username: null, email: null, role: null }
+         return {...state, token: null, username: '', email: '', role: '' }
       default:
          return state
    }
