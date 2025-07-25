@@ -3,6 +3,8 @@ import PageLayout from '../../components/layout/PageLayout'
 import Navbar from '../../components/Navbar'
 import ProfileUser from './ProfileUser'
 
+import CardRiwayat from './CardRiwayat'
+
 const Profile = () => {
 
    return (
@@ -12,8 +14,9 @@ const Profile = () => {
             <ProfileUser />
          </div>
 
-         <div className="mt-5"> 
-            <h3>Ringkasan unggahan</h3>
+         <div className="mt-7">
+            <h3 className='font-semibold tetx-md mb-4'>Ringkasan unggahan</h3>
+            <CardRiwayat />
          </div>
       </PageLayout>
    )
