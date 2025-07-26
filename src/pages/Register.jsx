@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form'
 import { postData } from '../utils/fetchDatas'
 import { useDispatch } from 'react-redux'
 import { showAlert } from '../redux/alert/action'
+import { FiEye, FiEyeOff } from 'react-icons/fi'
 
 
 const Register = () => {
@@ -24,6 +25,7 @@ const Register = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const [isLoading, setIsloading] = useState(false)
+   const [showPassword, setShowPassword] = useState(false);
 
    const handleRegister = async (data) => {
       setIsloading(true)
@@ -72,7 +74,7 @@ const Register = () => {
                   }
                })}
             />
-            
+
             <Input
                className="mb-7"
                type="email"
@@ -91,23 +93,32 @@ const Register = () => {
                })}
             />
 
-            <Input
-               className="mb-7"
-               type="password"
-               name="password"
-               id="password"
-               label="Password"
-               placeholder="Masukan Password"
-               error={errors.password}
-               register={register}
-               {...register('password', {
-                  required: 'Password is required',
-                  minLength: {
-                     value: 6,
-                     message: 'Password must be at least 6 characters',
-                  },
-               })}
-            />
+            <div className="relative mb-7">
+               <Input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  id="password"
+                  label="Password"
+                  placeholder="Masukan Password"
+                  error={errors.password}
+                  register={register}
+                  {...register('password', {
+                     required: 'Password is required',
+                     minLength: {
+                        value: 6,
+                        message: 'Password must be at least 6 characters',
+                     },
+                  })}
+               />
+
+               <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 bottom-3 text-gray-500"
+               >
+                  {showPassword ? <FiEyeOff /> : <FiEye />}
+               </button>
+            </div>
 
             <Button
                type="submit"

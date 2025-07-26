@@ -16,6 +16,7 @@ import { userLogin } from '../redux/auth/action'
 import { showAlert } from '../redux/alert/action'
 import { configs } from '../configs/config'
 import { FiRefreshCcw } from "react-icons/fi";
+import { FiEye, FiEyeOff } from 'react-icons/fi'
 
 
 const Login = () => {
@@ -28,6 +29,7 @@ const Login = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const [isLoading, setIsloading] = useState(false)
+   const [showPassword, setShowPassword] = useState(false);
    const [captchaUrl, setCaptchaUrl] = useState(getCaptchaUrl());
 
    function getCaptchaUrl() {
@@ -96,23 +98,32 @@ const Login = () => {
                })}
             />
             
-            <Input
-               className="mb-7"
-               type="password"
-               name="password"
-               id="password"
-               label="Password"
-               placeholder="Masukan Password"
-               error={errors.password}
-               register={register}
-               {...register('password', {
-                  required: 'Password wajib di isi',
-                  minLength: {
-                     value: 6,
-                     message: 'Password must be at least 6 characters',
-                  },
-               })}
-            />
+            <div className="relative mb-7">
+               <Input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  id="password"
+                  label="Password"
+                  placeholder="Masukan Password"
+                  error={errors.password}
+                  register={register}
+                  {...register('password', {
+                     required: 'Password wajib di isi',
+                     minLength: {
+                        value: 6,
+                        message: 'Password must be at least 6 characters',
+                     },
+                  })}
+               />
+
+               <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 bottom-3 text-gray-500"
+               >
+                  {showPassword ? <FiEyeOff /> : <FiEye />}
+               </button>
+            </div>
 
             <div className="flex items-center gap-2 mb-5">
                <div className="flex-1 relative">
