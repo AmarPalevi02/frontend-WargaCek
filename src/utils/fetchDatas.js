@@ -16,7 +16,8 @@ export const postData = async (payload, formData, resource) => {
             headers: {
                Authorization: `Bearer ${token}`,
                'Content-Type': formData ? 'multipart/form-data' : 'application/json',
-            }
+            },
+              withCredentials: true 
          }
       );
 

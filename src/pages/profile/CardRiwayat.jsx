@@ -44,12 +44,12 @@ const CardRiwayat = () => {
          {isLoading
             ? Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)
             : history.map((item, i) => (
-               <div key={i} className=" rounded-xl overflow-hidden shadow-md bg-[#fff] mb-4 p-3">
-                  <div className=" h-40 overflow-hidden">
+               <div key={i} className=" rounded-xl overflow-hidden shadow-md bg-[#fff] mb-4 ">
+                  <div className=" h-40 overflow-hidden p-2">
                      <img
                         src={item.thumbnail}
                         alt=""
-                        className="w-full h-full object-cover rounded-lg"
+                        className="w-full h-full object-cover rounded-lg "
                      />
                   </div>
 

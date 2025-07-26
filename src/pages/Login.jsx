@@ -14,6 +14,8 @@ import { postData } from '../utils/fetchDatas'
 import { useDispatch } from 'react-redux'
 import { userLogin } from '../redux/auth/action'
 import { showAlert } from '../redux/alert/action'
+import { configs } from '../configs/config'
+import { FiRefreshCcw } from "react-icons/fi";
 
 
 const Login = () => {
@@ -26,6 +28,14 @@ const Login = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const [isLoading, setIsloading] = useState(false)
+   const [captchaUrl, setCaptchaUrl] = useState(getCaptchaUrl());
+
+   function getCaptchaUrl() {
+      return `${configs.base_url_dev}${configs.version}/captcha?${Date.now()}`;
+   }
+   const refreshCaptcha = () => {
+      setCaptchaUrl(getCaptchaUrl());
+   };
 
    const handleLogin = async (data) => {
       setIsloading(true)
@@ -85,6 +95,7 @@ const Login = () => {
                   },
                })}
             />
+            
             <Input
                className="mb-7"
                type="password"
@@ -100,6 +111,38 @@ const Login = () => {
                      value: 6,
                      message: 'Password must be at least 6 characters',
                   },
+               })}
+            />
+
+            <div className="flex items-center gap-2 mb-5">
+               <div className="flex-1 relative">
+                  <img
+                     src={captchaUrl}
+                     alt="captcha"
+                     className="w-full h-14 object-contain bg-white rounded border border-gray-300"
+                  />
+                  <button
+                     type="button"
+                     onClick={refreshCaptcha}
+                     className="absolute top-1 right-1 p-1 rounded bg-white hover:bg-gray-100 shadow-md"
+                     aria-label="Refresh captcha"
+                  >
+                     <FiRefreshCcw className="text-gray-600 w-5 h-5" />
+                  </button>
+               </div>
+            </div>
+
+            <Input
+               className="mb-7"
+               type="text"
+               name="captcha"
+               id="captcha"
+               label="Masukkan kode captcha"
+               placeholder="Masukkan captcha di atas"
+               error={errors.captcha}
+               register={register}
+               {...register('captcha', {
+                  required: 'Captcha wajib diisi',
                })}
             />
 
