@@ -35,6 +35,7 @@ const Login = () => {
    function getCaptchaUrl() {
       return `${configs.base_url_dev}${configs.version}/captcha?${Date.now()}`;
    }
+   
    const refreshCaptcha = () => {
       setCaptchaUrl(getCaptchaUrl());
    };
@@ -97,7 +98,7 @@ const Login = () => {
                   },
                })}
             />
-            
+
             <div className="relative mb-7">
                <Input
                   type={showPassword ? "text" : "password"}

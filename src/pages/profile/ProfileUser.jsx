@@ -22,7 +22,11 @@ const ProfileUser = () => {
       <div className="flex gap-3">
          <div className="">
             <div className="bg-gray-500 h-24 w-24 rounded-full flex justify-center ">
-               <img src={images.profile} alt="" />
+               <img
+                  src={images.profile}
+                  alt="profile"
+                  loading="lazy"
+               />
             </div>
          </div>
 

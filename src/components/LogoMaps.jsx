@@ -7,6 +7,7 @@ const LogoMaps = () => {
          <img
             src={images.logo}
             className='w-44'
+            loading="lazy"
          />
          <div className="w-[150px] h-[4px] bg-[#ba1a1a] rounded-[10px]"></div>
       </div>
