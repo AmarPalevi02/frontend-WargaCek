@@ -9,6 +9,7 @@ import { thunk } from "redux-thunk";
 
 import authReducer from './auth/reducer'
 import alertReducer from './alert/reducer'
+import jenisKerusakanReducer from './getJenisKerusakan/reducer'
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -16,7 +17,8 @@ const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // global state
 const rootReducers = combineReducers({
    auth: authReducer,
-   alert: alertReducer
+   alert: alertReducer,
+   jenisKerusakan: jenisKerusakanReducer
 })
 
 

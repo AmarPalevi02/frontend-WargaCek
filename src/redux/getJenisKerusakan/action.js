@@ -1,3 +1,4 @@
+import { getDatas } from '../../utils/fetchDatas'
 import {
    START_FETCHING_JENISKERUSAKAN,
    SUCCESS_FETCHING_JENISKERUSAKAN,
@@ -8,16 +9,24 @@ export const startFetchingJenisKerusakan = () => {
    return { type: START_FETCHING_JENISKERUSAKAN }
 }
 
+export const successFetchingJenisKerusakan = (data) => {
+   return {
+      type: SUCCESS_FETCHING_JENISKERUSAKAN,
+      payload: data
+   }
+}
+
 export const errorFetchingJenisKerusakan = () => {
    return { type: ERROR_FETCHING_JENISKERUSAKAN }
 }
 
-export const succesFetchingJenisKejadian = () => {
+export const fetchingJenisKejadian = () => {
    return async (dispatch) => {
       dispatch(startFetchingJenisKerusakan())
 
       try {
-         // const response 
+         const response = await getDatas('getAllKerusakan')
+         dispatch(successFetchingJenisKerusakan(response.data))
       } catch (error) {
          dispatch(errorFetchingJenisKerusakan())
       }

@@ -12,7 +12,9 @@ export const getDatas = async (resource, params) => {
 
       const response = await axios.get(`${configs.base_url_dev}${configs.version}/${resource}`, {
          params,
-         headers: `Bearer ${token}`
+         headers: {
+            Authorization: `Bearer ${token}`
+         }
       })
 
       return response
