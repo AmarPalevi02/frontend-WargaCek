@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import PageLayout from '../../components/layout/PageLayout'
 import Navbar from '../../components/Navbar'
+import DamageTypeDropdown from './DamageTypeDropdown'
+
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchingJenisKejadian } from '../../redux/getJenisKerusakan/action'
-import { IoIosArrowDown } from "react-icons/io";
+
+import LocationMarkerUser from './LocationMarkerUser'
 
 
 const Laporan = () => {
@@ -11,20 +14,18 @@ const Laporan = () => {
    const [open, setOpen] = useState(false);
    const [selected, setSelected] = useState(null);
 
-
    const { data } = useSelector((state) => state.jenisKerusakan)
 
    useEffect(() => {
       dispatch(fetchingJenisKejadian())
    }, [dispatch])
 
-   const handleSelect = (item) => {
-      setSelected(item);
-      onSelect?.(item);
-      setOpen(false);
-   };
 
-   console.log(data.data)
+   const handleLocationChange = (coords) => {
+      setLocation(coords)
+      console.log('Koordinat lokasi terkini:', coords)
+   }
+
    return (
       <PageLayout>
          <Navbar />
@@ -34,42 +35,24 @@ const Laporan = () => {
                <p className='text-justify mt-5 leading-7'>Bantu sesama warga dengan mengunggah laporan tentang kerusakan jalan, banjir, atau gangguan lainnya. Satu laporanmu bisa berdampak besar.</p>
             </div>
 
+            <form className='mt-10'>
+               <DamageTypeDropdown
+                  data={data?.data || []}
+                  selected={selected}
+                  setSelected={setSelected}
+                  open={open}
+                  setOpen={setOpen}
+               />
 
-            <div className="w-full max-w-sm">
-               <label className="block font-semibold mb-2">Jenis kerusakan/kejadian</label>
-               <div className="relative">
-                  <button
-                     type="button"
-                     onClick={() => setOpen(!open)}
-                     className="w-full text-left px-4 py-2 bg-gray-200 rounded-md flex items-center justify-between"
-                  >
-                     {selected?.jenis_kerusakan || 'pilih kerusakan/kejadian'}
-                     {open ? (
-                        <IoIosArrowDown className="w-4 h-4 rotate-180 transition-transform duration-200" />
-                     ) : (
-                        <IoIosArrowDown className="w-4 h-4 transition-transform duration-200" />
-                     )}
-                  </button>
-
-                  {open && (
-                     <ul className="absolute z-10 mt-2 w-full bg-white border rounded shadow-md max-h-60 overflow-y-auto">
-                        {data?.data?.length > 0 ? (
-                           data.data.map((item) => (
-                              <li
-                                 key={item.id}
-                                 onClick={() => handleSelect(item)}
-                                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                              >
-                                 {item.jenis_kerusakan}
-                              </li>
-                           ))
-                        ) : (
-                           <li className="px-4 py-2 text-gray-500">Data tidak tersedia</li>
-                        )}
-                     </ul>
-                  )}
+               <div className='w-full h-50 flex justify-center mt-10'>
+                  <LocationMarkerUser
+                     className="w-full max-w-lg h-80 z-0"
+                     initialCenter={{ lat: -7.3170944, lng: 112.7317504 }}
+                     zoom={13}
+                     onLocationChange={handleLocationChange}
+                  />
                </div>
-            </div>
+            </form>
          </div>
       </PageLayout>
    )
