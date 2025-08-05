@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Navbar from '../../components/Navbar'
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet'
 
+
 function LocationMarker() {
    const [position, setPosition] = useState(null)
    const map = useMapEvents({

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter } from 'react-router-dom'
+import './assets/leaflet-icon'
 import AppRoute from './routes'
 import { listen } from './redux/listener'
 
