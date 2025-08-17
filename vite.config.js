@@ -11,7 +11,11 @@ export default defineConfig({
 
     VitePWA({
       registerType: 'autoUpdate',
-      manifest: {
+      devOptions: {
+        enabled: true
+      },
+
+      manifest: {   
         name: 'WargaCek',
         short_name: 'App',
         start_url: '/',
@@ -20,12 +24,12 @@ export default defineConfig({
         background_color: '#ffffff',
         icons: [
           {
-            src: '/logo.png',
+            src: '/logo-192.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: '/logo.png',
+            src: '/logo-512.png',
             sizes: '512x512',
             type: 'image/png'
           }

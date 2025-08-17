@@ -7,7 +7,7 @@ import {
 
 let initialState = Cookies.get('auth')
    ? JSON.parse(Cookies.get('auth'))
-   : { token: null, username: null, email: null, role: null }
+   : { token: null, username: null, email: null, role: null, id: null }
 
 
 export default function reducer(state = initialState, action) {
@@ -17,10 +17,11 @@ export default function reducer(state = initialState, action) {
             token: action.token,
             username: action.username,
             email: action.email,
-            role: action.role
+            role: action.role,
+            id: action.id
          }
       case USER_LOGOUT:
-         return {...state, token: null, username: '', email: '', role: '' }
+         return { ...state, token: null, username: '', email: '', role: '', id: '' }
       default:
          return state
    }

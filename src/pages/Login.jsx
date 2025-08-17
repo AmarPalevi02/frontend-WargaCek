@@ -35,7 +35,7 @@ const Login = () => {
    function getCaptchaUrl() {
       return `${configs.base_url_dev}${configs.version}/captcha?${Date.now()}`;
    }
-   
+
    const refreshCaptcha = () => {
       setCaptchaUrl(getCaptchaUrl());
    };
@@ -50,11 +50,12 @@ const Login = () => {
             token,
             username: user.username,
             email: user.email,
-            role: user.role
+            role: user.role,
+            id: user.id
          };
          Cookies.set('auth', JSON.stringify(authPayload));
 
-         dispatch(userLogin(token, user.username, user.email, user.role));
+         dispatch(userLogin(token, user.username, user.email, user.role, user.id));
 
          navigate('/');
 

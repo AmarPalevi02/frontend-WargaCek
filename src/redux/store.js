@@ -10,6 +10,8 @@ import { thunk } from "redux-thunk";
 import authReducer from './auth/reducer'
 import alertReducer from './alert/reducer'
 import jenisKerusakanReducer from './getJenisKerusakan/reducer'
+import laporanReducer from './postLaporan/reducer'
+import getLaporanMapReducer from './getLaporanMap/reducer'
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -18,7 +20,9 @@ const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducers = combineReducers({
    auth: authReducer,
    alert: alertReducer,
-   jenisKerusakan: jenisKerusakanReducer
+   jenisKerusakan: jenisKerusakanReducer,
+   laporan: laporanReducer,
+   getLaporan: getLaporanMapReducer
 })
 
 

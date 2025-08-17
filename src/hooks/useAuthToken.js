@@ -12,6 +12,7 @@ const useAuthToken = () => {
     username: auth.username,
     email: auth.email,
     role: auth.role,
+    id: auth.id,
   };
 };
 

@@ -1,0 +1,4 @@
+export const FETCH_LAPORAN_REQUEST = 'redux/fetch/FETCH_LAPORAN_REQUEST'
+export const FETCH_LAPORAN_SUCCESS = 'redux/fetch/FETCH_LAPORAN_SUCCESS'
+export const FETCH_LAPORAN_FAILURE = 'redux/fetch/FETCH_LAPORAN_FAILURE'
+export const RESET_FETCH_LAPORAN = 'redux/fetch/RESET_FETCH_LAPORAN' 

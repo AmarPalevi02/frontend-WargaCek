@@ -30,9 +30,8 @@ const Navbar = () => {
 
    return (
       <div
-         className={`fixed bottom-10 left-0 w-full z-50 flex justify-center transition-all duration-300 ${
-            showNavbar ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
-         }`}
+         className={`fixed bottom-10 left-0 w-full z-50 flex justify-center transition-all duration-300 ${showNavbar ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+            }`}
       >
          <div className="w-full max-w-lg px-6">
             <nav className="w-full">
@@ -40,10 +39,9 @@ const Navbar = () => {
                   <NavLink
                      to="/"
                      className={({ isActive }) =>
-                        `flex flex-col items-center ${
-                           isActive
-                              ? 'text-[#328E6E] border-b-2 border-[#328E6E]'
-                              : 'text-gray-600'
+                        `flex flex-col items-center ${isActive
+                           ? 'text-[#328E6E] border-b-2 border-[#328E6E]'
+                           : 'text-gray-600'
                         }`
                      }
                   >
@@ -54,10 +52,9 @@ const Navbar = () => {
                   <NavLink
                      to="/maps"
                      className={({ isActive }) =>
-                        `flex flex-col items-center ${
-                           isActive
-                              ? 'text-[#328E6E] border-b-2 border-[#328E6E]'
-                              : 'text-gray-600'
+                        `flex flex-col items-center ${isActive
+                           ? 'text-[#328E6E] border-b-2 border-[#328E6E]'
+                           : 'text-gray-600'
                         }`
                      }
                   >
@@ -68,10 +65,9 @@ const Navbar = () => {
                   <NavLink
                      to="/tambahlaporan"
                      className={({ isActive }) =>
-                        `flex flex-col items-center ${
-                           isActive
-                              ? 'text-[#328E6E] border-b-2 border-[#328E6E]'
-                              : 'text-gray-600'
+                        `flex flex-col items-center ${isActive
+                           ? 'text-[#328E6E] border-b-2 border-[#328E6E]'
+                           : 'text-gray-600'
                         }`
                      }
                   >
@@ -81,10 +77,9 @@ const Navbar = () => {
                   <NavLink
                      to="/pantau"
                      className={({ isActive }) =>
-                        `flex flex-col items-center ${
-                           isActive
-                              ? 'text-[#328E6E] border-b-2 border-[#328E6E]'
-                              : 'text-gray-600'
+                        `flex flex-col items-center ${isActive
+                           ? 'text-[#328E6E] border-b-2 border-[#328E6E]'
+                           : 'text-gray-600'
                         }`
                      }
                   >
@@ -95,10 +90,9 @@ const Navbar = () => {
                   <NavLink
                      to="/profile"
                      className={({ isActive }) =>
-                        `flex flex-col items-center ${
-                           isActive
-                              ? 'text-[#328E6E] border-b-2 border-[#328E6E]'
-                              : 'text-gray-600'
+                        `flex flex-col items-center ${isActive
+                           ? 'text-[#328E6E] border-b-2 border-[#328E6E]'
+                           : 'text-gray-600'
                         }`
                      }
                   >

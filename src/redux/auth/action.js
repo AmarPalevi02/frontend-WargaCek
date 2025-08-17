@@ -4,13 +4,14 @@ import {
 } from "./constans";
 import Cookies from "js-cookie";
 
-export const userLogin = (token, username, email, role) => {
+export const userLogin = (token, username, email, role, id) => {
    return {
       type: USER_LOGIN,
       token,
       username,
       email,
-      role
+      role,
+      id
    }
 }
 
