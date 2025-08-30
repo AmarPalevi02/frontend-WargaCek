@@ -31,6 +31,8 @@ const CardPantau = () => {
       return Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)
    }
 
+   console.log(data)
+
    return (
       <>
          {data?.map((laporan, i) => (
@@ -57,7 +59,7 @@ const CardPantau = () => {
                   <div className="grid grid-cols-2 gap-2 text-sm text-black mb-4">
                      <div className="flex items-center gap-2">
                         <FaMapMarkerAlt />
-                        <span className="line-clamp-3">{laporan.nama_jalan || `${laporan.latitude}, ${laporan.longitude}`}</span>
+                        <span className="line-clamp-3">{laporan.location}</span>
                      </div>
                      <div className="flex items-center gap-2">
                         <FaUsers />

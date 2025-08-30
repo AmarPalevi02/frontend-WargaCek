@@ -53,6 +53,7 @@ const Laporan = () => {
       dispatch(postLaporan({
          tipe_kerusakan: selected.jenis_kerusakan,
          deskripsi: data.description,
+         location: data.location,
          longitude: data.longitude,
          latitude: data.latitude,
          image: data.image[0],
@@ -89,6 +90,23 @@ const Laporan = () => {
                {errors.jenis_kerusakan && (
                   <p className="text-red-500 text-sm mt-1">{errors.jenis_kerusakan.message}</p>
                )}
+
+               <div className="mt-5">
+                  <label htmlFor="location" className="block font-medium mb-2">
+                     Lokasi Jalan Rusak
+                  </label>
+                  <input
+                     id="location"
+                     type="text"
+                     {...register('location', { required: 'Alamat wajib diisi' })}
+                     className="w-full border border-gray-300 p-3 rounded-md"
+                     placeholder="Contoh: Jl. Diponegoro No. 12, Surabaya"
+                  />
+                  {errors.alamat && (
+                     <p className="text-red-500 text-sm mt-1">{errors.location.message}</p>
+                  )}
+               </div>
+
 
                <div className="mt-5">
                   <label htmlFor="description" className="block font-medium mb-2">
