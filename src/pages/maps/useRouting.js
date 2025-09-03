@@ -1,9 +1,13 @@
 import { useState } from "react";
 import L from "leaflet";
 import "leaflet-routing-machine";
+import { useDispatch } from "react-redux";
+import { showAlert } from "../../redux/alert/action";
 
 const useRouting = (mapRef, position, data) => {
    const [routeControl, setRouteControl] = useState(null);
+   const dispatch = useDispatch()
+
 
    const calculateRoute = (dest) => {
       const map = mapRef.current;
@@ -47,7 +51,10 @@ const useRouting = (mapRef, position, data) => {
          });
 
          if (melewatiKerusakan) {
-            alert("Rute utama melewati titik kerusakan. Gunakan rute alternatif (hijau).");
+            dispatch(showAlert(
+               "Rute utama melewati titik kerusakan. Gunakan rute alternatif (hijau).",
+               "warning"
+            ));
          }
       });
 

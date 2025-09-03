@@ -12,6 +12,10 @@ import alertReducer from './alert/reducer'
 import jenisKerusakanReducer from './getJenisKerusakan/reducer'
 import laporanReducer from './postLaporan/reducer'
 import getLaporanMapReducer from './getLaporanMap/reducer'
+import gethistoryUser from './historyUser/reducer'
+import deletedHistoryUser from './deletedhistoryuser/reducer'
+import voteLaporanReducer from './vote/reducer'
+import getLaporanByVoteReducer from './getlaporanbyvote/reducer'
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -22,7 +26,11 @@ const rootReducers = combineReducers({
    alert: alertReducer,
    jenisKerusakan: jenisKerusakanReducer,
    laporan: laporanReducer,
-   getLaporan: getLaporanMapReducer
+   getLaporan: getLaporanMapReducer,
+   historyUser: gethistoryUser,
+   deletedLaporan: deletedHistoryUser,
+   voteLaporan: voteLaporanReducer,
+   laporanbyVote: getLaporanByVoteReducer
 })
 
 

@@ -3,26 +3,28 @@ import SkeletonCard from '../../components/SkeletonCard'
 
 import { FaClock, FaMapMarkerAlt, FaRegThumbsDown, FaThumbsUp, FaUser, FaUsers } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchLaporan, resetFetchLaporan } from '../../redux/getLaporanMap/action'
+import { fetchLaporanVote, resetFetchLaporanVote } from '../../redux/getlaporanbyvote/action'
+import { voteLaporan } from '../../redux/vote/action'
 import { configs } from '../../configs/config'
 
 const CardPantau = () => {
    const dispatch = useDispatch();
-   const { data, loading } = useSelector((state) => state.getLaporan);
+   const { data, loading } = useSelector((state) => state.laporanbyVote);
+   const { voting } = useSelector((state) => state.voteLaporan)
 
    useEffect(() => {
       navigator.geolocation.getCurrentPosition(
          (position) => {
             const { latitude, longitude } = position.coords;
-            dispatch(fetchLaporan({ userLat: latitude, userLng: longitude, radius: 5 }));
+            dispatch(fetchLaporanVote({ userLat: latitude, userLng: longitude, radius: 5 }));
          },
          () => {
-            dispatch(fetchLaporan());
+            dispatch(fetchLaporanVote());
          }
       );
 
       return () => {
-         dispatch(resetFetchLaporan());
+         dispatch(resetFetchLaporanVote());
       };
    }, [dispatch]);
 
@@ -30,8 +32,6 @@ const CardPantau = () => {
    if (loading) {
       return Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)
    }
-
-   console.log(data)
 
    return (
       <>
@@ -63,7 +63,7 @@ const CardPantau = () => {
                      </div>
                      <div className="flex items-center gap-2">
                         <FaUsers />
-                        <span>{laporan.setuju || 0} orang setuju</span>
+                        <span>{laporan.likeCount || 0} orang setuju</span>
                      </div>
                      <div className="flex items-center gap-2">
                         <FaClock />
@@ -77,11 +77,20 @@ const CardPantau = () => {
 
                   {/* Tombol Aksi */}
                   <div className="flex gap-3 flex-wrap justify-evenly ">
-                     <button className="flex items-center gap-2 bg-gray-200 px-3 py-2 rounded-md text-sm">
+                     <button
+                        className="flex items-center gap-2 bg-gray-200 px-3 py-2 rounded-md text-sm"
+                        disabled={voting || laporan.userVote === "LIKE"} 
+                        onClick={() => dispatch(voteLaporan(laporan.id, "LIKE"))}
+                     >
                         <FaThumbsUp className="text-base sm:text-lg md:text-xl hidden sm:inline" />
                         Saya melihat ini
                      </button>
-                     <button className="flex items-center gap-2 bg-gray-200 px-3 py-2 rounded-md text-sm">
+
+                     <button
+                        className="flex items-center gap-2 bg-gray-200 px-3 py-2 rounded-md text-sm"
+                        disabled={voting || laporan.userVote === "DISLIKE"} 
+                        onClick={() => dispatch(voteLaporan(laporan.id, "DISLIKE"))}
+                     >
                         <FaRegThumbsDown className="text-base sm:text-lg md:text-xl hidden sm:inline" />
                         tidak melihat ini
                      </button>

@@ -1,83 +1,108 @@
-import React, { useEffect, useState } from 'react'
-import images from '../../assets'
+import React, { useEffect } from 'react'
 import SkeletonCard from '../../components/SkeletonCard'
 
-import { FaClock, FaMapMarkerAlt } from 'react-icons/fa'
-
-const history = [
-   {
-      thumbnail: images.jalanrusak,
-      title: "Kerusakan infrastruktur jalan",
-      description: "Lubang sedalam 20 cm menyebabkan beberapa motor tergelincir. Sudah 5 hari belum diperbaiki.",
-      location: "Jl. Merdeka No. 10",
-      upload: "1"
-   },
-   {
-      thumbnail: images.jalanbanjir,
-      title: "Jalan banjir",
-      description: "Jalan tergenang air setinggi 30-50 cm akibat hujan deras sejak pagi. Arus lalu lintas diperlambat, kendaraan roda dua disarankan mencari alternatif. Genangan diperkirakan surut dalam 4-5 jam jika hujan reda. Petugas sedang memantau dan membersihkan saluran air tersumbat",
-      location: "Jl. Ahmad Yani, depan Pasar Induk",
-      upload: "1"
-   },
-   {
-      thumbnail: images.penutupanjalan,
-      title: "Kerusakan penutupan jalan",
-      description: "Jalan ditutup sementara akibat lubang besar sedalam 20 cm yang belum diperbaiki selama 5 hari. Tercatat 3 motor tergelincir dan 1 mobil mengalami kerusakan ban. Pengalihan arus dipasang melalui jalur kiri dengan rambu darurat. Perbaikan diperkirakan dimulai besok pagi.",
-      location: "Jl. Merdeka, dekat pertokoan Serba 2000",
-      upload: "2"
-   },
-
-]
+import { FaClock, FaMapMarkerAlt, FaTrash } from 'react-icons/fa'
+import useAuthToken from '../../hooks/useAuthToken'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchingHistoryUser } from '../../redux/historyUser/action'
+import { deleteLaporanUser } from '../../redux/deletedhistoryuser/action'
+import { configs } from '../../configs/config'
+import { showAlert } from '../../redux/alert/action'
 
 const CardRiwayat = () => {
-   const [isLoading, setIsLoading] = useState(true)
+   const { id: userId } = useAuthToken()
+   const dispatch = useDispatch()
+
+   const { loading, data: history } = useSelector((state) => state.historyUser)
+   const { success: deleteSuccess } = useSelector((state) => state.deletedLaporan)
+
 
    useEffect(() => {
-      const timeout = setTimeout(() => {
-         setIsLoading(false)
-      }, 1500)
-      return () => clearTimeout(timeout)
-   }, [])
+      if (userId) {
+         dispatch(fetchingHistoryUser(userId))
+      }
+   }, [dispatch, userId])
+
+   useEffect(() => {
+      if (deleteSuccess && userId) {
+         dispatch(fetchingHistoryUser(userId))
+      }
+   }, [deleteSuccess, userId, dispatch])
+
+   const handleDelete = (laporanId) => {
+      dispatch(showAlert(
+         "Apakah yakin ingin menghapus laporan ini?",
+         "warning",
+         () => dispatch(deleteLaporanUser(laporanId))
+      ));
+   };
+
+   if (loading) {
+      return (
+         <>
+            {Array.from({ length: 3 }).map((_, i) => (
+               <SkeletonCard key={i} />
+            ))}
+         </>
+      )
+   }
+
+
 
    return (
       <>
-         {isLoading
-            ? Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)
-            : history.map((item, i) => (
-               <div key={i} className=" rounded-xl overflow-hidden shadow-md bg-[#fff] mb-4 ">
-                  <div className=" h-40 overflow-hidden p-2">
+         {history.length === 0 ? (
+            <p className="text-gray-600">Belum ada riwayat laporan.</p>
+         ) : (
+            history.map((item, i) => (
+               <div
+                  key={i}
+                  className="rounded-xl overflow-hidden shadow-md bg-[#fff] mb-4 relative"
+               >
+                  {/* Tombol Hapus */}
+                  <button
+                     onClick={() => handleDelete(item.id)}
+                     className="absolute top-4 right-4 bg-gray-200 text-black p-2 rounded-full shadow  transition"
+                  >
+                     <FaTrash size={14} />
+                  </button>
+
+                  {/* Foto */}
+                  <div className="h-40 overflow-hidden p-2">
                      <img
-                        src={item.thumbnail}
-                        alt=""
-                        className="w-full h-full object-cover rounded-lg "
+                        src={`${configs.base_url_dev}${item.foto_url}`}
+                        alt="foto laporan"
+                        className="w-full h-full object-cover rounded-lg"
                      />
                   </div>
 
                   {/* Konten */}
                   <div className="p-4">
                      <h2 className="text-lg font-semibold text-black mb-1">
-                        {item.title}
+                        {item.jenisKerusakan?.jenis_kerusakan ||
+                           item.tipe_kerusakan}
                      </h2>
                      <p className="text-sm text-gray-800 mb-4 line-clamp-3 text-justify">
-                        {item.description}
+                        {item.deskripsi}
                      </p>
 
                      {/* Lokasi dan Waktu */}
                      <div className="flex items-center text-sm text-black gap-2 mb-1">
                         <FaMapMarkerAlt className="text-base" />
-                        <span>
-                           {item.location}
-                        </span>
+                        <span>{item.location || '-'}</span>
                      </div>
                      <div className="flex items-center text-sm text-black gap-2">
                         <FaClock className="text-base" />
-                        <span>{item.upload} jam yang lalu</span>
+                        <span>
+                           {new Date(item.waktu_laporan).toLocaleString('id-ID')}
+                        </span>
                      </div>
                   </div>
                </div>
-            ))}
+            ))
+         )}
       </>
-   )
+   )  
 }
 
 export default CardRiwayat

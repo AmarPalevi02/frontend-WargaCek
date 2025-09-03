@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLaporan, resetFetchLaporan } from "../../redux/getLaporanMap/action";
 import { markerDestination } from "../../assets/leaflet-icon";
-
+import { showAlert } from "../../redux/alert/action";
 
 import useRouting from "./useRouting";
 import DestinationForm from "./DestinationForm";
@@ -13,6 +13,7 @@ import ToggleFormButton from "./ToggleFormButton";
 import LaporanMarkers from "./LaporanMarkers";
 import LocationMarker from "./LocationMarker";
 import Navbar from "../../components/Navbar";
+import Alert from "../../components/ui/Alert";
 
 
 const MapLaporan = () => {
@@ -60,7 +61,7 @@ const MapLaporan = () => {
   const handleDestinationSubmit = async (e) => {
     e.preventDefault();
     const input = e.target.destination.value.trim();
-    if (!input) return alert("Input tidak boleh kosong!");
+    if (!input) return dispatch(showAlert("Tujuan tidak boleh kosong!", "warning"))
 
     const coordMatch = input.match(/^-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?$/);
     if (coordMatch) {
@@ -81,11 +82,10 @@ const MapLaporan = () => {
         setDestination({ lat, lng });
         calculateRoute({ lat, lng });
       } else {
-        alert("Alamat tidak ditemukan.");
+        dispatch(showAlert("Alamat tidak ditemukan.", "warning"))
       }
     } catch (err) {
-      console.error("Geocoding error:", err);
-      alert("Gagal mencari alamat.");
+      dispatch(showAlert("Gagal mencari alamat.", "warning"))
     }
   };
 
@@ -97,6 +97,7 @@ const MapLaporan = () => {
       <Navbar />
 
       <div className="relative w-full max-w-lg mx-auto h-full">
+        <Alert />
         <LocateButton onClick={handleLocateClick} />
         <ToggleFormButton showForm={showForm} onClick={() => setShowForm(!showForm)} />
         <DestinationForm showForm={showForm} onSubmit={handleDestinationSubmit} />
@@ -114,6 +115,7 @@ const MapLaporan = () => {
           <LaporanMarkers data={data} />
           <SetMapRef mapRef={mapRef} />
           <LocationMarker position={position} />
+
           {destination && (
             <Marker position={[destination.lat, destination.lng]} icon={markerDestination}>
               <Popup>Tujuan Anda</Popup>

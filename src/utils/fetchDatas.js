@@ -47,3 +47,27 @@ export const postData = async (payload, formData, resource) => {
       return handleError(error)
    }
 };
+
+
+export const deleteData = async (resource) => {
+   try {
+      const { token } = Cookies.get("auth")
+         ? JSON.parse(Cookies.get("auth"))
+         : {};
+
+      const response = await axios.delete(
+         `${configs.base_url_dev}${configs.version}/${resource}`,
+         {
+            headers: {
+               Authorization: `Bearer ${token}`,
+               "Content-Type": "application/json",
+            },
+            withCredentials: true,
+         }
+      );
+
+      return response;
+   } catch (error) {
+      return handleError(error);
+   }
+};

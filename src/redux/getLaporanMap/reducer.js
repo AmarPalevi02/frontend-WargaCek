@@ -1,4 +1,9 @@
-import { FETCH_LAPORAN_FAILURE, FETCH_LAPORAN_REQUEST, FETCH_LAPORAN_SUCCESS, RESET_FETCH_LAPORAN } from "./constans";
+import {
+   FETCH_LAPORAN_FAILURE,
+   FETCH_LAPORAN_REQUEST,
+   FETCH_LAPORAN_SUCCESS,
+   RESET_FETCH_LAPORAN
+} from "./constans";
 
 const initialState = {
    data: [],
@@ -9,11 +14,26 @@ const initialState = {
 const laporanReducer = (state = initialState, action) => {
    switch (action.type) {
       case FETCH_LAPORAN_REQUEST:
-         return { ...state, loading: true, error: null };
+         return {
+            ...state,
+            loading: true,
+            error: null
+         };
+         
       case FETCH_LAPORAN_SUCCESS:
-         return { ...state, loading: false, data: action.payload, error: null };
+         return {
+            ...state,
+            loading: false,
+            data: action.payload,
+            error: null
+         };
+
       case FETCH_LAPORAN_FAILURE:
-         return { ...state, loading: false, error: action.payload };
+         return {
+            ...state,
+            loading: false,
+            error: action.payload
+         };
       case RESET_FETCH_LAPORAN:
          return initialState;
       default:

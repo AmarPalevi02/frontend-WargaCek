@@ -4,11 +4,13 @@ import Navbar from '../../components/Navbar'
 import ProfileUser from './ProfileUser'
 
 import CardRiwayat from './CardRiwayat'
+import Alert from '../../components/ui/Alert'
 
 const Profile = () => {
 
    return (
       <PageLayout>
+         <Alert />
          <Navbar />
          <div className="pt-7">
             <ProfileUser />

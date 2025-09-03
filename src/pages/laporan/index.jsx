@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { fetchingJenisKejadian } from '../../redux/getJenisKerusakan/action';
+import { postLaporan, resetPostLaporan } from '../../redux/postLaporan/action';
+
 import Cookies from 'js-cookie';
+
 import PageLayout from '../../components/layout/PageLayout';
 import Navbar from '../../components/Navbar';
 import DamageTypeDropdown from './DamageTypeDropdown';
 import LocationMarkerUser from './LocationMarkerUser';
 import Button from '../../components/ui/Button';
-import { fetchingJenisKejadian } from '../../redux/getJenisKerusakan/action';
-import { postLaporan, resetPostLaporan } from '../../redux/postLaporan/action';
+import useAuthToken from '../../hooks/useAuthToken';
 
 const Laporan = () => {
    const dispatch = useDispatch();
@@ -20,7 +23,7 @@ const Laporan = () => {
    const [open, setOpen] = useState(false);
    const [selected, setSelected] = useState(null);
    const [position, setPosition] = useState(null);
-   const { id: userId } = Cookies.get('auth') ? JSON.parse(Cookies.get('auth')) : {};
+   const { id: userId } = useAuthToken()
 
    useEffect(() => {
       dispatch(fetchingJenisKejadian());

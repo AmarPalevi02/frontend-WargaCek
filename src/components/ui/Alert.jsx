@@ -4,7 +4,7 @@ import { hideAlert } from '../../redux/alert/action';
 
 const Alert = () => {
    const dispatch = useDispatch();
-   const { message, type, show } = useSelector((state) => state.alert);
+   const { message, type, show, onConfirm } = useSelector((state) => state.alert);
 
    if (!show) return null;
 
@@ -15,20 +15,39 @@ const Alert = () => {
       warning: 'bg-yellow-100 text-yellow-800 border-yellow-400',
    };
 
+   const handleOk = () => {
+      if (onConfirm) {
+         onConfirm(); 
+      }
+      dispatch(hideAlert());
+   };
+
    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-40">
+      <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-40">
          <div className={`w-96 rounded-lg p-6 border shadow-lg ${typeColor[type] || typeColor.info}`}>
             <h2 className="text-lg font-semibold mb-3">Pesan</h2>
             <p className="mb-5 text-sm">{message}</p>
-            <button
-               onClick={() => dispatch(hideAlert())}
-               className="bg-[#3b82f6] text-white px-4 py-2 rounded hover:bg-blue-700 w-full"
-            >
-               OK
-            </button>
+
+            <div className="flex gap-2">
+               {onConfirm && (
+                  <button
+                     onClick={() => dispatch(hideAlert())}
+                     className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400 w-full"
+                  >
+                     Batal
+                  </button>
+               )}
+               <button
+                  onClick={handleOk}
+                  className="bg-[#3b82f6] text-white px-4 py-2 rounded hover:bg-blue-700 w-full"
+               >
+                  OK
+               </button>
+            </div>
          </div>
       </div>
    );
 };
 
 export default Alert;
+

@@ -10,7 +10,7 @@ const DestinationForm = ({ showForm, onSubmit }) => {
          <form onSubmit={onSubmit}>
             <input
                name="destination"
-               placeholder="Masukkan tujuan (lat,lng / alamat)"
+               placeholder="Masukkan alamat tujuan"
                className="w-full border p-2 rounded-md"
             />
             <button
