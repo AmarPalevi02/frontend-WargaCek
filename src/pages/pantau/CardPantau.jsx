@@ -16,7 +16,7 @@ const CardPantau = () => {
       navigator.geolocation.getCurrentPosition(
          (position) => {
             const { latitude, longitude } = position.coords;
-            dispatch(fetchLaporanVote({ userLat: latitude, userLng: longitude, radius: 5 }));
+            dispatch(fetchLaporanVote({ userLat: latitude, userLng: longitude, radius: 10 }));
          },
          () => {
             dispatch(fetchLaporanVote());
@@ -31,6 +31,15 @@ const CardPantau = () => {
 
    if (loading) {
       return Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)
+   }
+
+
+   if (!loading && data?.length === 0) {
+      return (
+         <div className="text-center text-gray-600 py-8">
+            🚧 Lokasi sekitarmu tidak ada kerusakan
+         </div>
+      )
    }
 
    return (
@@ -66,20 +75,29 @@ const CardPantau = () => {
                         <span>{laporan.likeCount || 0} orang setuju</span>
                      </div>
                      <div className="flex items-center gap-2">
+                        <FaRegThumbsDown className="text-red-500" />
+                        <span>{laporan.dislikeCount || 0} orang tidak setuju</span>
+                     </div>
+                     <div className="flex items-center gap-2">
                         <FaClock />
                         <span>{new Date(laporan.waktu_laporan).toLocaleString()}</span>
                      </div>
-                     <div className="flex items-center gap-2">
+                     <div className="flex items-center gap-2 col-span-2">
                         <FaUser />
                         <span>Oleh @{laporan.User?.username || laporan.username || "Anonim"}</span>
                      </div>
                   </div>
 
+
                   {/* Tombol Aksi */}
-                  <div className="flex gap-3 flex-wrap justify-evenly ">
+                  <div className="flex gap-3 flex-wrap justify-evenly">
                      <button
-                        className="flex items-center gap-2 bg-gray-200 px-3 py-2 rounded-md text-sm"
-                        disabled={voting || laporan.userVote === "LIKE"} 
+                        className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm 
+                        ${laporan.userVote === "LIKE"
+                              ? "bg-blue-500 text-white"
+                              : "bg-gray-200 text-black hover:bg-gray-300"
+                           }`}
+                        disabled={voting || laporan.userVote === "LIKE"}
                         onClick={() => dispatch(voteLaporan(laporan.id, "LIKE"))}
                      >
                         <FaThumbsUp className="text-base sm:text-lg md:text-xl hidden sm:inline" />
@@ -87,12 +105,16 @@ const CardPantau = () => {
                      </button>
 
                      <button
-                        className="flex items-center gap-2 bg-gray-200 px-3 py-2 rounded-md text-sm"
-                        disabled={voting || laporan.userVote === "DISLIKE"} 
+                        className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm 
+                        ${laporan.userVote === "DISLIKE"
+                              ? "bg-red-500 text-white"
+                              : "bg-gray-200 text-black hover:bg-gray-300"
+                           }`}
+                        disabled={voting || laporan.userVote === "DISLIKE"}
                         onClick={() => dispatch(voteLaporan(laporan.id, "DISLIKE"))}
                      >
                         <FaRegThumbsDown className="text-base sm:text-lg md:text-xl hidden sm:inline" />
-                        tidak melihat ini
+                        Tidak melihat ini
                      </button>
                   </div>
                </div>

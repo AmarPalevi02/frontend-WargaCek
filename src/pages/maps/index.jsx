@@ -33,7 +33,7 @@ const MapLaporan = () => {
       (pos) => {
         const { latitude, longitude } = pos.coords;
         setPosition({ lat: latitude, lng: longitude });
-        dispatch(fetchLaporan({ userLat: latitude, userLng: longitude, radius: 5 }));
+        dispatch(fetchLaporan({ userLat: latitude, userLng: longitude, radius: 10 }));
       },
       () => {
         dispatch(fetchLaporan());

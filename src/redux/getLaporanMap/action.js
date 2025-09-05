@@ -11,7 +11,7 @@ import {
 export const fetchLaporan = ({ userLat, userLng, radius } = {}) => async (dispatch) => {
    dispatch({ type: FETCH_LAPORAN_REQUEST });
    try {
-      const query = userLat && userLng ? `?userLat=${userLat}&userLng=${userLng}&radius=${radius || 5}` : '';
+      const query = userLat && userLng ? `?userLat=${userLat}&userLng=${userLng}&radius=${radius || 10}` : '';
       const response = await getDatas(`laporan${query}`);
       dispatch({
          type: FETCH_LAPORAN_SUCCESS,
