@@ -1,68 +1,88 @@
-import React from 'react'
-import Button from '../components/ui/Button'
-import LogoWc from '../components/LogoWc'
-import Navbar from '../components/Navbar';
-import PageLayout from '../components/layout/PageLayout';
-import useAuthToken from '../hooks/useAuthToken';
+import React from "react";
+import Button from "../components/ui/Button";
+import LogoWc from "../components/LogoWc";
+import Navbar from "../components/Navbar";
+import PageLayout from "../components/layout/PageLayout";
+import useAuthToken from "../hooks/useAuthToken";
 
-import { FaPlusCircle } from "react-icons/fa";
-import { FaMapMarkerAlt } from "react-icons/fa";
+import { FaPlusCircle, FaMapMarkerAlt, FaRoute } from "react-icons/fa";
 import { BiSolidBarChartSquare } from "react-icons/bi";
-import { FaRoute } from "react-icons/fa";
-
 
 const LandingPage = () => {
-   const { token, username, email, role } = useAuthToken()
+  const { token, username, email, role } = useAuthToken();
 
-   return (
-      <PageLayout>
-         <Navbar />
-         {!token || !username || !email || !role ? (
-            <div className="flex justify-end pt-6 gap-3">
-               <Button variant="primary" size="md" to="/login">Login</Button>
-               <Button variant="secondary" size="md" to="/register">Register</Button>
-            </div>
-         ) : ("")}
+  return (
+    <PageLayout>
+      <Navbar />
 
-         <div className="text-center pt-14">
-            <LogoWc className="text-2xl" />
-            <h1 className='text-lg font-medium mt-1'>Info Jalan dari Warga, untuk Warga.</h1>
-         </div>
+      {/* Header Section */}
+      {!token || !username || !email || !role ? (
+        <div className="flex justify-end pt-6 gap-3">
+          <Button variant="primary" size="md" to="/login">
+            Login
+          </Button>
+          <Button variant="secondary" size="md" to="/register">
+            Register
+          </Button>
+        </div>
+      ) : null}
 
-         <p className='text-justify mt-5 leading-7'>
-            Meningkatkan partisipasi aktif masyarakat dalam melaporkan kondisi infrastruktur seperti kerusakan jalan, banjir, dan penutupan jalan secara real-time.
-         </p>
+      <section className="max-w-4xl mx-auto pt-16 px-4">
+        <LogoWc className="text-4xl mx-auto text-center" />
+        <h1 className="text-2xl sm:text-3xl font-bold mt-3 text-center">
+          Info Jalan dari Warga, untuk Warga
+        </h1>
+        <p className="text-gray-600 text-justify mt-4 leading-7">
+          Meningkatkan partisipasi aktif masyarakat dalam melaporkan kondisi
+          infrastruktur seperti kerusakan jalan, banjir, dan penutupan jalan
+          secara real-time.
+        </p>
+      </section>
 
-         <div className="w-full bg-[#9BDCC5] rounded-md px-3 py-5 mt-6">
-            <div className="flex items-center gap-2 mb-3.5">
-               <FaPlusCircle className='text-3xl text-[#6b5778]' />
-               <p className='text-base'>Melaporkan kerusakan (lokasi, foto, deskripsi)</p>
-            </div>
-
-            <div className="flex items-center gap-2 mb-3.5">
-               <FaMapMarkerAlt className='text-3xl text-red-400' />
-               <p className='text-base'>Menampilkan laporan kerusakan</p>
-            </div>
-
-            <div className="flex items-center gap-2 mb-3.5">
-               <BiSolidBarChartSquare className='text-3xl text-[#437057]' />
-               <p className='text-base'>Voting pada laporan kerusakan</p>
-            </div>
-
-            <div className="flex items-center gap-2">
-               <FaRoute className='text-3xl' />
-               <p className='text-base'>Menampilkan rute alternatif</p>
-            </div>
-         </div>
-
-         <div className="w-full bg-[#9BDCC5] rounded-md px-3 py-5 mt-5">
-            <h2 className='text-2xl font-semibold'>Tujuan</h2>
-            <p className='text-justify leading-7 mt-2'>
-               Menyediakan platform digital berbasis crowdsourcing yang memungkinkan warga untuk saling berbagi dan memverifikasi informasi lapangan secara cepat dan akurat.
+      {/* Features Section */}
+      <section className="max-w-5xl mx-auto mt-12 px-4">
+        <div className="grid sm:grid-cols-2 gap-6">
+          <div className="flex items-start gap-3 bg-gradient-to-r from-green-100 to-green-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+            <FaPlusCircle className="text-3xl text-[#6b5778]" />
+            <p className="text-base font-medium ">
+              Melaporkan kerusakan (lokasi, foto, deskripsi)
             </p>
-         </div>
-      </PageLayout>
-   )
-}
+          </div>
 
-export default LandingPage
+          <div className="flex items-start gap-3 bg-gradient-to-r from-red-100 to-red-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+            <FaMapMarkerAlt className="text-3xl text-red-500" />
+            <p className="text-base font-medium">
+              Menampilkan laporan kerusakan
+            </p>
+          </div>
+
+          <div className="flex items-start gap-3 bg-gradient-to-r from-green-100 to-green-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+            <BiSolidBarChartSquare className="text-3xl text-[#437057]" />
+            <p className="text-base font-medium">
+              Voting pada laporan kerusakan
+            </p>
+          </div>
+
+          <div className="flex items-start gap-3 bg-gradient-to-r from-indigo-100 to-indigo-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+            <FaRoute className="text-3xl text-indigo-600" />
+            <p className="text-base font-medium">Menampilkan rute alternatif</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Goals Section */}
+      <section className="max-w-4xl mx-auto mt-14 px-4">
+        <div className="bg-white rounded-2xl shadow-md p-8">
+          <h2 className="text-2xl font-semibold text-gray-800">Tujuan</h2>
+          <p className="text-gray-600 mt-3 text-justify leading-7">
+            Menyediakan platform digital berbasis crowdsourcing yang
+            memungkinkan warga untuk saling berbagi dan memverifikasi informasi
+            lapangan secara cepat dan akurat.
+          </p>
+        </div>
+      </section>
+    </PageLayout>
+  );
+};
+
+export default LandingPage;

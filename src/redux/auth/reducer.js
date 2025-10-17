@@ -11,7 +11,7 @@ let initialState = Cookies.get('auth')
 
 
 export default function reducer(state = initialState, action) {
-   switch (action) {
+   switch (action.type) {
       case USER_LOGIN:
          return {
             token: action.token,
