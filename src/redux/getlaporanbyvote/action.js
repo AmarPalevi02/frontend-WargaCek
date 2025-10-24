@@ -7,15 +7,21 @@ import {
 } from "./constans";
 import { radiusCOnfigs } from "../../configs/constans";
 
+const getStoredRadius = () => {
+  const stored = localStorage.getItem("selectedRadius");
+  console.log(stored)
+  return stored ? parseInt(stored) : radiusCOnfigs.DEFAULT_RADIUS;
+};
+
 export const fetchLaporanVote =
-  ({ userLat, userLng, radius } = {}) =>
+  ({ userLat, userLng } = {}) =>
   async (dispatch) => {
     dispatch({ type: FETCH_LAPORAN_VOTE_REQUEST });
     try {
       const query =
         userLat && userLng
           ? `?userLat=${userLat}&userLng=${userLng}&radius=${
-              radius || radiusCOnfigs.DEFAULT_RADIUS
+               getStoredRadius()
             }`
           : "";
       const response = await getDatas(`laporan-vote${query}`);

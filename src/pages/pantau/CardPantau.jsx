@@ -20,11 +20,10 @@ import {
 } from "../../redux/getlaporanbyvote/action";
 import { voteLaporan } from "../../redux/vote/action";
 import { configs } from "../../configs/config";
-import { radiusCOnfigs } from "../../configs/constans";
 
 const CardPantau = () => {
   const dispatch = useDispatch();
-  const { data, loading } = useSelector((state) => state.laporanbyVote);
+  const { data, radius, loading } = useSelector((state) => state.laporanbyVote);
   const { voting } = useSelector((state) => state.voteLaporan);
 
   // Fungsi untuk mendapatkan warna dan icon berdasarkan status
@@ -112,7 +111,7 @@ const CardPantau = () => {
           fetchLaporanVote({
             userLat: latitude,
             userLng: longitude,
-            radius: radiusCOnfigs.DEFAULT_RADIUS,
+            radius: radius,
           })
         );
       },

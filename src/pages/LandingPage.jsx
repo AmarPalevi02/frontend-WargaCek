@@ -30,11 +30,11 @@ const LandingPage = () => {
       <section className="max-w-4xl mx-auto pt-16 px-4">
         <LogoWc className="text-4xl mx-auto text-center" />
         <h1 className="text-2xl sm:text-3xl font-bold mt-3 text-center">
-          Info Jalan dari Warga, untuk Warga
+          Info Lingkungan dari Warga, untuk Warga
         </h1>
         <p className="text-gray-600 text-justify mt-4 leading-7">
           Meningkatkan partisipasi aktif masyarakat dalam melaporkan kondisi
-          infrastruktur seperti kerusakan jalan, banjir, dan penutupan jalan
+          lingkungan seperti kerusakan jalan, banjir, dan penutupan jalan
           secara real-time.
         </p>
       </section>

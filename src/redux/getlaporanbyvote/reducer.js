@@ -6,11 +6,13 @@ import {
 } from "./constans";
 
 import { VOTE_LAPORAN_SUCCESS } from "../vote/constans";
+import { radiusCOnfigs } from "../../configs/constans";
 
 const initialState = {
   data: [],
   loading: true,
   error: null,
+  radius: radiusCOnfigs.DEFAULT_RADIUS
 };
 
 const laporanReducer = (state = initialState, action) => {
