@@ -20,9 +20,11 @@ import {
 } from "../../redux/getlaporanbyvote/action";
 import { voteLaporan } from "../../redux/vote/action";
 import { configs } from "../../configs/config";
+import { useNavigate } from "react-router-dom";
 
 const CardPantau = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { data, radius, loading } = useSelector((state) => state.laporanbyVote);
   const { voting } = useSelector((state) => state.voteLaporan);
 
@@ -137,6 +139,10 @@ const CardPantau = () => {
     );
   }
 
+  const handleCardClick = (laporanId) => {
+    navigate(`/pantau/${laporanId}`);
+  };
+
   return (
     <>
       {data?.map((laporan, i) => (
@@ -144,97 +150,107 @@ const CardPantau = () => {
           key={i}
           className="bg-[#fff] rounded-xl overflow-hidden shadow-md mb-4 max-w-md mx-auto"
         >
-          <div className="h-40 w-full overflow-hidden p-2">
-            {laporan.foto_url && (
-              <img
-                src={`${configs.base_url_dev}${laporan.foto_url}`}
-                alt="Foto kerusakan"
-                className="w-full h-full object-cover rounded-lg"
-              />
-            )}
-          </div>
-
-          <div className="p-4">
-            {/* Header dengan status */}
-            <div className="flex justify-between items-start mb-2">
-              <h2 className="text-lg font-semibold text-black mb-1 flex-1">
-                {laporan.tipe_kerusakan}
-              </h2>
-              <StatusBadge
-                status={laporan.status || "PENDING"}
-                dinas={laporan.dinas}
-              />
-            </div>
-
-            {/* Info update status */}
-            {(laporan.statusUpdatedAt || laporan.dinas) && (
-              <div className="text-xs text-gray-500 mb-3 flex items-center gap-1">
-                {laporan.statusUpdatedAt && (
-                  <span>
-                    Diupdate {formatStatusDate(laporan.statusUpdatedAt)}
-                  </span>
-                )}
-                {laporan.statusUpdatedAt && laporan.dinas && <span>•</span>}
-                {laporan.dinas && (
-                  <span className="font-medium">Ditangani {laporan.dinas}</span>
+          <div className="">
+            <div className="" onClick={() => handleCardClick(laporan.id)}>
+              <div className="h-40 w-full overflow-hidden p-2">
+                {laporan.foto_url && (
+                  <img
+                    src={`${configs.base_url_dev}${laporan.foto_url}`}
+                    alt="Foto kerusakan"
+                    className="w-full h-full object-cover rounded-lg"
+                  />
                 )}
               </div>
-            )}
+              <div className="p-4">
+                {/* Header dengan status */}
+                <div className="flex justify-between items-start mb-2">
+                  <h2 className="text-lg font-semibold text-black mb-1 flex-1">
+                    {laporan.tipe_kerusakan}
+                  </h2>
+                  <StatusBadge
+                    status={laporan.status || "PENDING"}
+                    dinas={laporan.dinas}
+                  />
+                </div>
 
-            <p className="text-sm text-gray-800 mb-4 line-clamp-3 text-justify">
-              {laporan.deskripsi}
-            </p>
+                {/* Info update status */}
+                {(laporan.statusUpdatedAt || laporan.dinas) && (
+                  <div className="text-xs text-gray-500 mb-3 flex items-center gap-1">
+                    {laporan.statusUpdatedAt && (
+                      <span>
+                        Diupdate {formatStatusDate(laporan.statusUpdatedAt)}
+                      </span>
+                    )}
+                    {laporan.statusUpdatedAt && laporan.dinas && <span>•</span>}
+                    {laporan.dinas && (
+                      <span className="font-medium">
+                        Ditangani {laporan.dinas}
+                      </span>
+                    )}
+                  </div>
+                )}
 
-            <div className="grid grid-cols-2 gap-2 text-sm text-black mb-4">
-              <div className="flex items-center gap-2">
-                <FaMapMarkerAlt />
-                <span className="line-clamp-3">{laporan.location}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FaUsers />
-                <span>{laporan.likeCount || 0} orang setuju</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FaRegThumbsDown className="text-red-500" />
-                <span>{laporan.dislikeCount || 0} orang tidak setuju</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FaClock />
-                <span>{new Date(laporan.waktu_laporan).toLocaleString()}</span>
-              </div>
-              <div className="flex items-center gap-2 col-span-2">
-                <FaUser />
-                <span>
-                  Oleh @{laporan.User?.username || laporan.username || "Anonim"}
-                </span>
-              </div>
-            </div>
+                <p className="text-sm text-gray-800 mb-4 line-clamp-3 text-justify">
+                  {laporan.deskripsi}
+                </p>
 
-            {/* Progress bar untuk status (opsional) */}
-            <div className="mb-4">
-              <div className="flex justify-between text-xs text-gray-500 mb-1">
-                <span>Status Penanganan</span>
-                <span>{getStatusInfo(laporan.status || "PENDING").text}</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div
-                  className={`h-2 rounded-full ${
-                    laporan.status === "PENDING"
-                      ? "bg-red-500 w-1/4"
-                      : laporan.status === "VALIDATED"
-                      ? "bg-yellow-500 w-2/4"
-                      : laporan.status === "IN_PROGRESS"
-                      ? "bg-blue-500 w-3/4"
-                      : laporan.status === "DONE"
-                      ? "bg-green-500 w-full"
-                      : "bg-gray-500 w-1/4"
-                  }`}
-                />
+                <div className="grid grid-cols-2 gap-2 text-sm text-black mb-4">
+                  <div className="flex items-center gap-2">
+                    <FaMapMarkerAlt />
+                    <span className="line-clamp-3">{laporan.location}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaUsers />
+                    <span>{laporan.likeCount || 0} orang setuju</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaRegThumbsDown className="text-red-500" />
+                    <span>{laporan.dislikeCount || 0} orang tidak setuju</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaClock />
+                    <span>
+                      {new Date(laporan.waktu_laporan).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 col-span-2">
+                    <FaUser />
+                    <span>
+                      Oleh @
+                      {laporan.User?.username || laporan.username || "Anonim"}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Progress bar untuk status (opsional) */}
+                <div className="mb-4">
+                  <div className="flex justify-between text-xs text-gray-500 mb-1">
+                    <span>Status Penanganan</span>
+                    <span>
+                      {getStatusInfo(laporan.status || "PENDING").text}
+                    </span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      className={`h-2 rounded-full ${
+                        laporan.status === "PENDING"
+                          ? "bg-red-500 w-1/4"
+                          : laporan.status === "VALIDATED"
+                          ? "bg-yellow-500 w-2/4"
+                          : laporan.status === "IN_PROGRESS"
+                          ? "bg-blue-500 w-3/4"
+                          : laporan.status === "DONE"
+                          ? "bg-green-500 w-full"
+                          : "bg-gray-500 w-1/4"
+                      }`}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Tombol Aksi */}
-            <div className="flex gap-3 flex-wrap justify-evenly">
+            <div className="flex gap-3 flex-wrap justify-evenly pb-4">
               <button
                 className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm 
                         ${

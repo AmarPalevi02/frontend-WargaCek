@@ -6,10 +6,10 @@ import Maps from '../pages/maps'
 
 import { Route, Routes } from 'react-router-dom'
 import Laporan from '../pages/laporan'
-import Pantau from '../pages/pantau'
 import Profile from '../pages/profile'
 import PrivateRoute from './PrivateRoute'
 import GuestOnlyRoute from './GuestOnlyRoute'
+import PantauRoutes from './Pantau'
 
 const AppRoute = () => {
    return (
@@ -26,7 +26,7 @@ const AppRoute = () => {
          <Route element={<PrivateRoute />}>
             <Route path='/maps' element={<Maps />} />
             <Route path='/tambahlaporan' element={<Laporan />} />
-            <Route path='/pantau' element={<Pantau />} />
+            <Route path='/pantau/*' element={<PantauRoutes />} />
             <Route path='/profile' element={<Profile />} />
          </Route>
       </Routes>
