@@ -11,7 +11,6 @@ import { showAlert } from "../../redux/alert/action";
 
 import useRouting from "./useRouting";
 import DestinationForm from "./DestinationForm";
-import SetMapRef from "./SetMapRef";
 import LocateButton from "./LocateButton";
 import ToggleFormButton from "./ToggleFormButton";
 import LaporanMarkers from "./LaporanMarkers";
@@ -34,9 +33,8 @@ const MapLaporan = () => {
 
   const { calculateRoute } = useRouting(mapRef, position, data);
 
-
   // Load radius dari localStorage saat komponen mount
-   useEffect(() => {
+  useEffect(() => {
     dispatch(loadRadiusFromStorage());
   }, [dispatch]);
 
@@ -53,6 +51,11 @@ const MapLaporan = () => {
             radius: radius,
           })
         );
+
+        // Set center map ke lokasi user saat pertama kali load
+        if (mapRef.current) {
+          mapRef.current.setView([latitude, longitude], 13);
+        }
       },
       () => {
         dispatch(fetchLaporan());
@@ -77,17 +80,57 @@ const MapLaporan = () => {
     }
   }, [radius, position, dispatch]);
 
-  // Tombol locate
-  const handleLocateClick = () => {
-    const map = mapRef.current;
-    if (!map) return;
 
-    map.locate();
-    map.on("locationfound", function (e) {
-      setPosition({ lat: e.latlng.lat, lng: e.latlng.lng });
-      map.flyTo(e.latlng, map.getZoom());
-    });
+  const handleLocateClick = () => {
+    if (!navigator.geolocation) {
+      dispatch(showAlert("Geolocation tidak didukung di browser ini", "error"));
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords;
+        const newPosition = { lat: latitude, lng: longitude };
+
+        setPosition(newPosition);
+
+        // Set center map ke lokasi user 
+        if (mapRef.current) {
+          mapRef.current.setView([latitude, longitude], 16);
+        }
+
+        dispatch(
+          fetchLaporan({
+            userLat: latitude,
+            userLng: longitude,
+            radius: radius,
+          })
+        );
+      },
+      (error) => {
+        console.error("Error getting location:", error);
+        let errorMessage = "Gagal mendapatkan lokasi";
+
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            errorMessage =
+              "Izin akses lokasi ditolak. Silakan aktifkan izin lokasi.";
+            break;
+          case error.POSITION_UNAVAILABLE:
+            errorMessage = "Informasi lokasi tidak tersedia.";
+            break;
+          case error.TIMEOUT:
+            errorMessage = "Permintaan lokasi timeout.";
+            break;
+          default:
+            errorMessage = "Error tidak diketahui saat mengambil lokasi.";
+        }
+
+        dispatch(showAlert(errorMessage, "error"));
+      }
+    );
   };
+
 
   // Submit tujuan
   const handleDestinationSubmit = async (e) => {
@@ -142,7 +185,7 @@ const MapLaporan = () => {
 
       <div className="relative w-full max-w-lg mx-auto h-full">
         <Alert />
-         <RadiusSelector /> 
+        <RadiusSelector />
         <LocateButton onClick={handleLocateClick} />
         <ToggleFormButton
           showForm={showForm}
@@ -155,16 +198,16 @@ const MapLaporan = () => {
 
         <MapContainer
           className="w-full z-0 h-full"
-          center={{ lat: -7.2575, lng: 112.7521 }}
+          center={position || { lat: -7.2575, lng: 112.7521 }} 
           zoom={13}
           scrollWheelZoom={false}
+          ref={mapRef} 
         >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           />
           <LaporanMarkers data={data} />
-          <SetMapRef mapRef={mapRef} />
           <LocationMarker position={position} />
 
           {destination && (

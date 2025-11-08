@@ -1,8 +1,18 @@
 import { Marker, Popup } from "react-leaflet";
 import { configs } from "../../configs/config";
 import { redIcon } from "../../assets/leaflet-icon";
+import { useNavigate } from "react-router-dom";
 
-export default function LaporanMarkers({ data }) {
+const LaporanMarkers = ({ data }) => {
+  const navigate = useNavigate();
+
+  const handleMarkerClick = (laporanId, e) => {
+    if (e) {
+      e.stopPropagation();
+    }
+    navigate(`/maps/${laporanId}`);
+  };
+  
   return (
     <>
       {data?.map((laporan) => (
@@ -12,7 +22,10 @@ export default function LaporanMarkers({ data }) {
           icon={redIcon}
         >
           <Popup>
-            <div className="w-64 rounded-lg bg-white shadow-md overflow-hidden">
+            <div
+              className="w-64 rounded-lg bg-white shadow-md overflow-hidden"
+              onClick={(e) => handleMarkerClick(laporan.id, e)}
+            >
               {laporan.foto_url && (
                 <img
                   src={`${configs.base_url_dev}${laporan.foto_url}`}
@@ -28,8 +41,9 @@ export default function LaporanMarkers({ data }) {
                     laporan.jenisKerusakan?.jenis_kerusakan}
                 </h3>
 
-               
-                <p className="text-gray-600 text-justify leading-7 line-clamp-3">{laporan.deskripsi}</p>
+                <p className="text-gray-600 text-justify leading-7 line-clamp-3">
+                  {laporan.deskripsi}
+                </p>
 
                 <p className="text-gray-700">
                   <span className="font-medium">👤 Pelapor:</span>{" "}
@@ -54,4 +68,6 @@ export default function LaporanMarkers({ data }) {
       ))}
     </>
   );
-}
+};
+
+export default LaporanMarkers;

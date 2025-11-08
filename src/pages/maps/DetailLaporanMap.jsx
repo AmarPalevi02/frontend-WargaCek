@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getLaporanDetail } from "../../redux/detailLaporan/action";
 import {
+  FaArrowLeft,
   FaClock,
   FaMapMarkerAlt,
   FaUser,
@@ -28,7 +29,7 @@ import { showAlert } from "../../redux/alert/action";
 import Alert from "../../components/ui/Alert";
 import { NavigateBack } from "../../components/ui/NavigateBack";
 
-const DetailLaporan = () => {
+const DetailLaporanMaps = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -186,7 +187,7 @@ const DetailLaporan = () => {
         <div className="max-w-4xl mx-auto">
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
             <p>Error: {error}</p>
-            <NavigateBack back={"/pantau"} />
+            <NavigateBack back={"/maps"} />
           </div>
         </div>
       </div>
@@ -220,7 +221,7 @@ const DetailLaporan = () => {
       <div className="max-w-lg mx-auto">
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
-          <NavigateBack back={"/pantau"} />
+          <NavigateBack back={"/maps"} />
         </div>
 
         {/* Card Detail */}
@@ -484,4 +485,4 @@ const DetailLaporan = () => {
   );
 };
 
-export default DetailLaporan;
+export default DetailLaporanMaps;

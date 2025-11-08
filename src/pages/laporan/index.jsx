@@ -14,6 +14,8 @@ import useAuthToken from "../../hooks/useAuthToken";
 import InputField from "./InputField";
 import TextAreaField from "./TextareaField";
 import FileField from "./FileField";
+import { showAlert } from "../../redux/alert/action";
+import Alert from "../../components/ui/Alert";
 
 const Laporan = () => {
   const dispatch = useDispatch();
@@ -48,7 +50,7 @@ const Laporan = () => {
       dispatch(resetPostLaporan());
     }
     if (error) {
-      alert(`Error: ${error}`);
+      dispatch(showAlert(`${error}`, "warning"));
       dispatch(resetPostLaporan());
     }
   }, [success, error, navigate, dispatch]);
@@ -75,6 +77,7 @@ const Laporan = () => {
   return (
     <PageLayout>
       <Navbar />
+      <Alert />
       <div className="pt-5">
         <div>
           <h1 className="text-xl font-semibold">Laporkan Kondisi Sekitarmu</h1>
@@ -130,7 +133,7 @@ const Laporan = () => {
             rows={5}
             placeholder="Tuliskan deskripsi kerusakan yang Anda temui..."
           />
-          
+
           {/* Foto */}
           <FileField
             id="image"
