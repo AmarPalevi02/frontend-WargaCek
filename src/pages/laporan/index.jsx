@@ -116,7 +116,7 @@ const Laporan = () => {
 
           <InputField
             id="location"
-            label="Lokasi Jalan Rusak"
+            label="Lokasi Kejadian"
             register={register}
             rules={{ required: "Alamat wajib diisi" }}
             errors={errors}
@@ -126,7 +126,7 @@ const Laporan = () => {
           {/* Deskripsi */}
           <TextAreaField
             id="description"
-            label="Deskripsi Kerusakan"
+            label="Deskripsi Kejadian"
             register={register}
             rules={{ required: "Deskripsi wajib diisi" }}
             errors={errors}
