@@ -9,9 +9,11 @@ import { useDispatch } from 'react-redux';
 import { userLogout } from '../../redux/auth/action';
 
 const ProfileUser = () => {
-   const { username, email } = useAuthToken()
+   const { username, email, id } = useAuthToken()
    const navigate = useNavigate()
    const dispatch = useDispatch()
+   console.log(username)
+   console.log(id)
 
    const handleLogOut = () => {
       dispatch(userLogout())
